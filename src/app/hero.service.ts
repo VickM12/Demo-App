@@ -22,47 +22,61 @@ constructor(
   private http: HttpClient,
   private messageService: MessageService){}
 
-  // GET heroes from the server
-  /** GET heroes from the server */
+/* POST: add a new hero to the server*/ 
+addHero(hero: Hero): Observable<Hero> {
+  return this.http.post<Hero>(this.heroesURL, hero, this.httpOptions).pipe(
+    tap((newHero: Hero) =>this.log(`added hero w/ id= ${newHero.id}`)),
+    catchError(this.handleError<Hero>('addHero'))
+  );
+}
+/* GET heroes from the server */
 getHeroes(): Observable<Hero[]> {
   return this.http.get<Hero[]>(this.heroesURL)
     .pipe(
-      tap(_ => console.log('fetched heroes')),
+      tap(_ => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes', []))
     );
 }
 
-  //Get Hero by id. Will 404 if id not found
-  getHero(id: number): Observable<Hero> {
+/*GET Hero by id. Will 404 if id not found */
+getHero(id: number): Observable<Hero> {
     const url =`${this.heroesURL}/${id}`;
     return this.http.get<Hero>(url).pipe(
-      tap(_ => console.log(`fetched hero id= ${id}`)),
+      tap(_ => this.log(`fetched hero id= ${id}`)),
       catchError(this.handleError<Hero>(`getHero id =${id}`))
     );
   }
 
-  //PUT: Update the Hero on the server
+/* GET heroes whose name contains search term */
+searchHeroes(term: string): Observable<Hero[]>{
+  if (!term.trim()) {
+    //if not serach term, return empty hero array.
+    return of ([]);
+  }
+  return this.http.get<Hero[]>(`${this.heroesURL}/?name=${term}`).pipe(
+    tap(x => x.length ?
+      this.log(`found heroes matching "${term}"`) :
+      this.log(`no heroes matching "${term}"`)),
+      catchError(this.handleError<Hero[]>('searchHeroes', []))
+  );
+}
+
+/*PUT: Update the Hero on the server */
   updateHero(hero: Hero): Observable<any> {
     return this.http.put(this.heroesURL, hero, this.httpOptions).pipe(
-      tap(_ => console.log(`updated hero id= ${hero.id}`)),
+      tap(_ => this.log(`updated hero id= ${hero.id}`)),
       catchError(this.handleError<any>('updateHero'))
     );
   }
 
-  /* POST: add a new hero to the server*/ 
-addHero(hero: Hero): Observable<Hero> {
-  return this.http.post<Hero>(this.heroesURL, hero, this.httpOptions).pipe(
-    tap((newHero: Hero) =>console.log(`added hero w/ id= ${newHero.id}`)),
-    catchError(this.handleError<Hero>('addHero'))
-  );
-}
 
-/** DELETE: Delete the hero from the server */
+
+/* DELETE: Delete the hero from the server */
 deleteHero(id: number): Observable<Hero>{
   const url =`${this.heroesURL}/${id}`;
 
   return this.http.delete<Hero>(url, this.httpOptions).pipe(
-    tap(_ => console.log(`deleted hero id= ${id}`)),
+    tap(_ => this.log(`deleted hero id= ${id}`)),
     catchError(this.handleError<Hero>('deleteHero'))
   );
 }
@@ -83,10 +97,15 @@ deleteHero(id: number): Observable<Hero>{
       console.error(error); //Log to console instead
 
       //TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
+      this.log(`${operation} failed: ${error.message}`);
 
       //Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
+
+  private log(message: string){
+    this.messageService.add(`HeroService: ${message}`)
+  }
+ 
 }
