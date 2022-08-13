@@ -18,5 +18,12 @@ constructor(private messageService: MessageService) { }
     return heroes;
   }
 
+  getHero(id: number): Observable<Hero> {
+    //No handling if Hero has id yet. Will be implemented
+    const hero = HEROES.find(h => h.id === id)!;
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    return of(hero);
+  }
+
   
 }
