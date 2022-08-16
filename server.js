@@ -5,10 +5,10 @@ const path= require('path');
 const app = express();
 
 
-app.use(express.static(__dirname + 'tour-of-heroes'));
+app.use(express.static(__dirname + '/tour-of-heroes'));
 
 app.get('/*', function(req,res){
-    res.sendFile(path.join(__dirname, 'src','index.html'))
+    res.sendFile(path.join(__dirname, '/dist','index.html'))
 
 });
 

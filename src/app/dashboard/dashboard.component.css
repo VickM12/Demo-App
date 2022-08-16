@@ -23,13 +23,16 @@ h2 {
 }
 
 a {
-  background-color: #3f525c;
-  border-radius: 2px;
+  background-color: #ffe83a;
+  border-style:solid;
+  border-color: rgb(218, 7, 7);
+  border-width: 5px;
+  border-radius: 25px;
   padding: 1rem;
   font-size: 1.2rem;
   text-decoration: none;
   display: inline-block;
-  color: #fff;
+  color: Black;
   text-align: center;
   width: 100%;
   min-width: 70px;
@@ -50,5 +53,8 @@ a {
 }
 
 a:hover {
-  background-color: black;
+  color: white;
+  background-color: rgb(218, 7, 7);
+  border-style: solid;
+
 }
