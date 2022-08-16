@@ -22,13 +22,7 @@ constructor(
   private http: HttpClient,
   private messageService: MessageService){}
 
-/* POST: add a new hero to the server*/ 
-addHero(hero: Hero): Observable<Hero> {
-  return this.http.post<Hero>(this.heroesURL, hero, this.httpOptions).pipe(
-    tap((newHero: Hero) =>this.log(`added hero w/ id= ${newHero.id}`)),
-    catchError(this.handleError<Hero>('addHero'))
-  );
-}
+
 /* GET heroes from the server */
 getHeroes(): Observable<Hero[]> {
   return this.http.get<Hero[]>(this.heroesURL)
@@ -58,6 +52,14 @@ searchHeroes(term: string): Observable<Hero[]>{
       this.log(`found heroes matching "${term}"`) :
       this.log(`no heroes matching "${term}"`)),
       catchError(this.handleError<Hero[]>('searchHeroes', []))
+  );
+}
+
+/* POST: add a new hero to the server*/ 
+addHero(hero: Hero): Observable<Hero> {
+  return this.http.post<Hero>(this.heroesURL, hero, this.httpOptions).pipe(
+    tap((newHero: Hero) =>this.log(`added hero w/ id= ${newHero.id}`)),
+    catchError(this.handleError<Hero>('addHero'))
   );
 }
 
