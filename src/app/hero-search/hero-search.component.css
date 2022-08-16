@@ -6,6 +6,11 @@ label {
     font-size: 1.2rem;
     margin-top: 1rem;
     margin-bottom: .5rem;
+    color: black;
+    width:fit-content;
+    background-color: #ffe83a;
+    border: 2px solid rgb(218, 7, 7);
+    border-radius: 5px;
   
   }
   input {
@@ -17,7 +22,7 @@ label {
   }
   
   input:focus {
-    outline: #336699 auto 1px;
+    outline: rgb(218, 7, 7) auto 1px;
   }
   
   li {
@@ -34,10 +39,11 @@ label {
     box-sizing: border-box;
     text-decoration: none;
     color: black;
+    background-color: #ffe83a;
   }
   
   .search-result li a:hover {
-    background-color: #435A60;
+    background-color:rgb(218, 7, 7);
     color: white;
   }
   
