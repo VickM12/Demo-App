@@ -5,7 +5,7 @@ h2 {
   width: 25%;
   background-color:#ffe83a;
   margin: 0 auto;
-  border: 4px solid rgb(218, 7, 7);
+  border: 4px solid black;
   border-radius: 5px;
 }
 
@@ -30,7 +30,7 @@ h2 {
 a {
   background-color: #ffe83a;
   border-style:solid;
-  border-color: rgb(218, 7, 7);
+  border-color: black;
   border-width: 5px;
   border-radius: 25px;
   padding: 1rem;
